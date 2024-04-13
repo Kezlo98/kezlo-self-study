@@ -78,3 +78,53 @@
     - ...
 
 ## Index
+
+### What are indexes?
+
+- Is a special data structure that improves the speed of data retrieval operations on a database table.
+- Without index, database has to scan through the entire of table sequentially to find the matching record => Time complexity: O(n)
+- But n only increase time by time, and it normal huge, can be > 1M => performance issue
+
+### Why an index can provide faster retrieval compared to a search without an index
+
+- **Reduced Data Access**: Database can directly locate the relevant data pages or rows containing the desired values => Doesn't need to scan the entire table => significantly reduce data access and I/O operations
+- **Smaller Search Space**: The index structure provides a narrower search space => quicker identification of the desired records
+- **Optimized Disk Access**: Because an index typically resides in a separate data structure, it is designed to be more compact and fit in memory => requires fewer disk I/O operations
+- **Search Algorithms**: Indexes employ efficient search algorithms like binary search,... which have time complexity lower than linear => Improve retrieve performance
+
+### Why don’t we index every column to support fast read?
+
+Because it will have the following bad effects:
+
+- INSERTs to the table will be slower since index must be updated
+- The table's storage footprint will be larger as all these extra indexes need to be stored
+- The query optimization process will be slower as there's more possible query plans to analyze (event if some not useful)
+
+### Disadvantage
+
+- Additional Writes operation
+- Storage space to maintain the index data structure
+
+### Index type
+
+1. **Hash Indexes**
+
+- Based on a Hash Table
+  - **key**: **hash code** of the indexed columns
+  - **value**: Pointer to the corresponding row (**page_id, slot_id**)
+
+- ***Advantages***
+  - O(1) in both reads and writes data
+- ***Disadvantages***
+  - **Hash indexes store in memory**
+    - Data not store close in disk => not fast while using disk => use ram to store
+    - Hash indexes store in memory => key need to fit in RAM => expensive
+    - RAM is not durable => need write-ahead log store in disk
+    - If we losing RAM => need to create Hash again => run all log => cost time
+  - **No range queries**
+    - Due to hash function => cannot compare => cannot use range queries
+  - **No support partial key matching**:
+    - If index(***Col1, Col2***) => not help if query only with ***Col1*** or ***Col2***
+  - **Performance can bo unstable in case of hash collision**
+
+1. **B-Tree**
