@@ -79,6 +79,8 @@
 
 ## Index
 
+![Indexes](content/indexes.png)
+
 ### What are indexes?
 
 - Is a special data structure that improves the speed of data retrieval operations on a database table.
@@ -109,6 +111,8 @@ Because it will have the following bad effects:
 
 1. **Hash Indexes**
 
+![hash](content/Hash.png)
+
 - Based on a Hash Table
   - **key**: **hash code** of the indexed columns
   - **value**: Pointer to the corresponding row (**page_id, slot_id**)
@@ -127,4 +131,11 @@ Because it will have the following bad effects:
     - If index(***Col1, Col2***) => not help if query only with ***Col1*** or ***Col2***
   - **Performance can bo unstable in case of hash collision**
 
-1. **B-Tree**
+2. **B-Tree**
+
+![B-Tree](content/B-Tree%20Indexes.png)
+
+- Based on a Binary Search Tree
+  - Store in disk
+  - Auto balanced
+  -  
