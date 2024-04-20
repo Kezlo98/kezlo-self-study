@@ -119,12 +119,13 @@ Because it will have the following bad effects:
 
 - ***Advantages***
   - O(1) in both reads and writes data
+  - 0(1) for equality query (=, !=, IN)
 - ***Disadvantages***
   - **Hash indexes store in memory**
     - Data not store close in disk => not fast while using disk => use ram to store
     - Hash indexes store in memory => key need to fit in RAM => expensive
     - RAM is not durable => need write-ahead log store in disk
-    - If we losing RAM => need to create Hash again => run all log => cost time
+    - If we're losing RAM => need to create Hash again => run all log => cost time
   - **No range queries**
     - Due to hash function => cannot compare => cannot use range queries
   - **No support partial key matching**:
@@ -133,9 +134,55 @@ Because it will have the following bad effects:
 
 2. **B-Tree**
 
-![B-Tree](content/B-Tree%20Indexes.png)
+![B-Tree](content/B-TreeIndexes.png)
 
 - Based on a Binary Search Tree
   - Store in disk
   - Auto balanced
-  -  
+  - 
+- B-Tree properties:
+  - Self-balanced: every leaf node is at same depth
+  - Each node has M-1 keys and M children
+  - Each node (except root) is at least half-full: M/2 - 1 <= keys <= M - 1
+  - Keys in each node are sorted
+  - Leaf nodes are connected 2-ways
+- **General Structure**
+![B-TreeNode](content/B-TreeNode.png)
+- **B-Tree Search**
+  - Start from root, search correct child and follow the pointer
+  - Because of keys are sorted => can use Binary Search
+  - Runtime: ~O(logN)
+- **B-Tree Insert**
+  - Find the correct **Leaf node L** (Search)
+  - Put the new key into L in sorted order
+  - If L has enough space => done!
+  - If not => split L into 2 **even** children L1 and L2, push up the middle key to L's parent. Repeat if L's parent if full
+  - Runtime:
+    - time to splitting key: O(M) (M: number children of current node)
+    - insert time: ~ O(logN)
+- **B-Tree vs B+Tree**
+![B-TreeVsB+Tree](content/B-TreeVsB+Tree.png)
+  - B-Tree different:
+    - Inner Node can contain pointer to records
+    - no duplicated key
+    - leaf-node are not connected as D-Linked List
+  - B+Tree over B-Tree:
+    - Support full scan: 
+      - Leaf nodes of B+ are linked => full scan of all objects in a tree requires just one linear pass through all the lead nodes
+      - Inner node of B+ does not have a pointer to data => more keys can be packed in a B+ => reducing the tree's height
+![B+TreeDataPointer](content/B+TreeDataPointer.png)
+- ***Advantages***
+  - Match leftmost prefix index: 
+    - Index (Col1, Col2, Col3) => B+Tree index can support query on (Col1), (Col1, Col2), (Col1, Col2, Col3)
+  - Match part of the first column: Index on **Name** column => B+ index can support query all records having **Name** start with letter "Qu"
+  - Match a range of values (>=, >, <=, <)
+  - Store on disk => not easy to lose data
+- ***Disadvantages***
+  - More complex than Hash indexes
+  - Write speed is slower than LMS-tree indexes(SSTable)
+  - Slower search than Hash index for equality query (=, !=, IN)
+
+- ***Why use B+ for index, not BST/AVL/Red-Black Tree ?***
+  - B+tree are self-balance while BST is not => can lead to a very tall tree
+  - B+ are much shorter than other balanced binary tree structures such as AVL => fewer disk access
+  - B+ each node contains a large number of key sorted => much more efficient than AVL, BST or Hash table for range query
