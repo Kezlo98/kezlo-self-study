@@ -23,11 +23,11 @@
 
 ## 4 Level of Transaction Isolation
 1. Read Phenomena
-    ![ReadPhenomena](/content/ReadPhenomena.png)
+    ![ReadPhenomena](ReadPhenomena.png)
    - Non-Repeatable Read:
-     - EX: ![Non-Repeatable Read](/content/read-skew-ex.png)
+     - EX: ![Non-Repeatable Read](read-skew-ex.png)
      - **Solution**: Can use **Right ahead log**
 2. Isolation Levels
-   ![Transaction Isolation Levels](/content/TransactionIsolationLevels.png)
+   ![Transaction Isolation Levels](TransactionIsolationLevels.png)
 3. Relationship between isolation levels and read phenomena
-   ![Relationship Between isolation levels and read phenomena](/content/RelationshipBetweenIsolationLevelsAndPhenomena.png)
+   ![Relationship Between isolation levels and read phenomena](RelationshipBetweenIsolationLevelsAndPhenomena.png)

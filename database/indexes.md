@@ -1,6 +1,6 @@
 # Index
 
-![Indexes](/content/indexes.png)
+![Indexes](indexes.png)
 
 ## What are indexes?
 
@@ -32,7 +32,7 @@ Because it will have the following bad effects:
 
 1. **Hash Indexes**
 
-    - ![hash](/content/Hash.png)
+    - ![hash](Hash.png)
     - Based on a Hash Table
         - **key**: **hash code** of the indexed columns
         - **value**: Pointer to the corresponding row (**page_id, slot_id**)
@@ -53,7 +53,7 @@ Because it will have the following bad effects:
 
 2. **B-Tree**
 
-    ![B-Tree](/content/B-TreeIndexes.png)
+    ![B-Tree](B-TreeIndexes.png)
 
     - Based on a Binary Search Tree
         - Store in disk
@@ -66,7 +66,7 @@ Because it will have the following bad effects:
         - Keys in each node are sorted
         - Leaf nodes are connected 2-ways
     - **General Structure**
-      ![B-TreeNode](/content/B-TreeNode.png)
+      ![B-TreeNode](B-TreeNode.png)
     - **B-Tree Search**
         - Start from root, search correct child and follow the pointer
         - Because of keys are sorted => can use Binary Search
@@ -80,7 +80,7 @@ Because it will have the following bad effects:
             - time to splitting key: O(M) (M: number children of current node)
             - insert time: ~ O(logN)
     - **B-Tree vs B+Tree**
-      ![B-TreeVsB+Tree](/content/B-TreeVsB+Tree.png)
+      ![B-TreeVsB+Tree](B-TreeVsB+Tree.png)
         - B-Tree different:
             - Inner Node can contain pointer to records
             - no duplicated key
@@ -89,7 +89,7 @@ Because it will have the following bad effects:
             - Support full scan:
                 - Leaf nodes of B+ are linked => full scan of all objects in a tree requires just one linear pass through all the lead nodes
                 - Inner node of B+ does not have a pointer to data => more keys can be packed in a B+ => reducing the tree's height
-                  ![B+TreeDataPointer](/content/B+TreeDataPointer.png)
+                  ![B+TreeDataPointer](B+TreeDataPointer.png)
     - ***Advantages***
         - Match leftmost prefix index:
             - Index (Col1, Col2, Col3) => B+Tree index can support query on (Col1), (Col1, Col2), (Col1, Col2, Col3)

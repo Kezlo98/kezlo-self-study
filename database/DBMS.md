@@ -7,7 +7,7 @@
 - Database store on disk as a bunch of **files**
 - DBMS is the one that maintains the database files
 - It organizes files as a collection of **pages**
-- ![Database File](/content/DatabaseFile.png)
+![Database File](./content/DatabaseFile.png)
 
 ## Pages
 
@@ -28,7 +28,7 @@
 - Use ***Slotted page layout*** to store:
     - At the beginning of the Page, right after the Header, it store an array that contain offsets to tuple(data) => called Slot Array
     - The tuples (data) will be at the end of **Page**
-    - ![Page Layout](/content/PageLayout.png)
+    - ![Page Layout](PageLayout.png)
     - When we need to insert a new tuple:
         - Read the starting location of the last slot used
         - Create a new slot in slot array
@@ -43,7 +43,7 @@
     - DBMS version
     - Number of empty slot
     - ....
-    - ![Data Page](/content/DataPage.png)
+    - ![Data Page](DataPage.png)
 
 ## Heap File Organization
 
@@ -54,7 +54,7 @@
     - Use to keep track of the location of data pages in the file
     - Use to keep tract the number of free slots per page
     - Mapping from **Page_id** to its position(offset) in the file => increase read speed
-    - ![HeapDirectoryPage](/content/HeapDirectoryPage.png)
+    - ![HeapDirectoryPage](HeapDirectoryPage.png)
 
 ## Buffer Pool (== Cached)
 
@@ -66,7 +66,7 @@
     - Finds the page in **Buffer Pool**
     - If found => return
     - If not => **read from Disk**, copy to **Buffer Pool**, return
-- ![Buffer Pool](/content/BufferPool.png)
+- ![Buffer Pool](BufferPool.png)
 - **Replacement Policies**:
     - Pool's size is limited <= RAM's size (80% RAM)
     - DBMS needs to clear a frame to make room when full
